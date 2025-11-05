@@ -1,23 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NovelService } from '../novel.service';
 import { CommonModule } from '@angular/common';
 import { NovelCardComponent } from './novel-card/novel-card.component';
-import { Novel } from '../novel.model';
-import { tap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-novel-lists',
+  standalone: true,
   imports: [CommonModule, NovelCardComponent],
   templateUrl: './novel-lists.component.html',
-  styleUrl: './novel-lists.component.scss',
 })
 export class NovelListsComponent {
-  novelService = inject(NovelService);
-  novels = signal<Novel[]>([]);
+  private novelService = inject(NovelService);
 
-  ngOnInit() {
-    this.novelService.getNovels().subscribe((novels) => {
-      this.novels.set(novels.data);
-    });
-  }
+  novels = toSignal(
+    this.novelService.getNovels().pipe(map((res) => res.data)),
+    { initialValue: [] }
+  );
 }

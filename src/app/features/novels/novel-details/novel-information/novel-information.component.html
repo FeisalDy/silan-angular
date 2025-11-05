@@ -1,0 +1,65 @@
+@if(media.isXSmall() || media.isSmall()){
+<article>
+    <div class="flex gap-4">
+        <figure>
+            <img class="aspect-2/3 h-40 md:h-80 rounded-md object-cover shadow-sm" [src]="novel().cover_url ?? ''"
+                [alt]="novel().title" />
+        </figure>
+        <header class="mb-2">
+            <h2 class="text-lg md:text-xl font-semibold text-slate-900 truncate">
+                {{ novel().title }}
+            </h2>
+            <p class="text-sm text-slate-600">
+                <span class="font-medium">Author:</span>
+                {{ novel().original_author || "Unknown" }}
+            </p>
+        </header>
+    </div>
+
+    <section class="prose-sm md:prose-lg">
+        <div [innerHTML]="novel().description | safeHtml"></div>
+    </section>
+
+    <footer class="mt-3">
+        <mat-chip-set aria-label="Novel tags" class="flex flex-wrap gap-1">
+            @for (tag of tags(); track tag.slug) {
+            <mat-chip highlighted [title]="tag.description">
+                {{ tag.name }}
+            </mat-chip>
+            }
+        </mat-chip-set>
+    </footer>
+</article>
+} @else {
+<article class="flex gap-4">
+    <figure>
+        <img class="aspect-2/3 h-40 md:h-80 rounded-md object-cover shadow-sm" [src]="novel().cover_url ?? ''"
+            [alt]="novel().title" />
+    </figure>
+
+    <div class="flex-1 min-w-0">
+        <header class="mb-2">
+            <h2 class="text-lg md:text-xl font-semibold text-slate-900 truncate">
+                {{ novel().title }}
+            </h2>
+            <p class="text-sm text-slate-600">
+                <span class="font-medium">Author:</span>
+                {{ novel().original_author || "Unknown" }}
+            </p>
+        </header>
+        <section class="prose-sm md:prose-lg">
+            <div [innerHTML]="novel().description | safeHtml"></div>
+        </section>
+
+        <footer class="mt-3">
+            <mat-chip-set aria-label="Novel tags" class="flex flex-wrap gap-1">
+                @for (tag of tags(); track tag.slug) {
+                <mat-chip highlighted [title]="tag.description">
+                    {{ tag.name }}
+                </mat-chip>
+                }
+            </mat-chip-set>
+        </footer>
+    </div>
+</article>
+}

@@ -1,13 +1,31 @@
-<article
-    class="flex items-start gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
-    <img class="h-28 w-20 md:h-36 md:w-24 shrink-0 rounded-md object-cover bg-gray-100" [src]="novel().cover_url ?? ''"
-        [alt]="novel().title | truncate:80" />
-    <div class="min-w-0">
-        <h3 class="text-base font-semibold text-gray-900">
-            {{ novel().title | truncate:80 }}
-        </h3>
-        <p class="mt-1 text-sm leading-5 text-gray-600">
-            {{ novel().description | truncate:80 }}
-        </p>
+<article class="flex items-start gap-4 border-b border-slate-200 pb-4">
+    <figure class="shrink-0">
+        <img class="aspect-2/3 h-40 md:h-60 rounded-md object-cover shadow-sm" [src]="novel().cover_url ?? ''"
+            [alt]="novel().title | truncate:80" />
+    </figure>
+
+    <div class="flex-1 min-w-0" [routerLink]="['/novels', novel().id]" class="cursor-pointer">
+        <header class="mb-2">
+            <h2 class="text-lg font-semibold text-slate-900 truncate">
+                {{ novel().title | truncate:80 }}
+            </h2>
+            <p class="text-sm text-slate-600">
+                <span class="font-medium">Author:</span>
+                {{ (novel().original_author || 'Unknown') | truncate:80 }}
+            </p>
+        </header>
+
+        <section class="prose-sm md:prose-lg line-clamp-5">
+            <div [innerHTML]="novel().description | safeHtml"></div>
+        </section>
+
+        <footer class="mt-3">
+            <mat-chip-set aria-label="Novel tags" class="flex flex-wrap gap-1">
+                @for (tag of tags(); track tag.slug) {
+                <mat-chip color="primary" [title]="tag.description" selected (click)="onTagClick($event, tag)">{{
+                    tag.name }}</mat-chip>
+                }
+            </mat-chip-set>
+        </footer>
     </div>
 </article>

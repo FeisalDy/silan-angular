@@ -1,0 +1,31 @@
+@if (isVirtual()) {
+<mat-accordion multi>
+    <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+            <mat-panel-title> {{ volumes()[0].title }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="grid grid-cols-1 md:grid-cols-3">
+            @for (chapter of volumes()[0].chapters; track chapter.id ) {
+            <a matButton [routerLink]="['chapters',chapter.id]">{{`${chapter.number}.
+                ${chapter.title}` | truncate: 30}}</a>
+            }
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+}@else {
+<mat-accordion multi>
+    @for (volume of volumes(); track volume.id ) {
+    <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+            <mat-panel-title> {{ volume.title }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="grid grid-cols-1 md:grid-cols-3">
+            @for (chapter of volume.chapters; track chapter.id ) {
+            <a matButton [routerLink]="['chapters',chapter.id]">{{`${chapter.number}.
+                ${chapter.title}` | truncate: 30}}</a>
+            }
+        </div>
+    </mat-expansion-panel>
+    }
+</mat-accordion>
+}

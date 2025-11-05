@@ -1,0 +1,8 @@
+<section class="max-w-[1200px] mx-auto flex flex-col gap-4">
+    @if(novel(); as novel){
+    <app-novel-information [novel]="novel"></app-novel-information>
+    }
+    @if(volumes(); as volumes){
+    <app-novel-content [volumes]="volumes"></app-novel-content>
+    }
+</section>

@@ -1,0 +1,25 @@
+<section class="max-w-[1000px] mx-auto">
+    <article>
+        <header>
+            <h2 class="text-lg font-semibold text-slate-900">
+                {{chapter()?.title}}
+            </h2>
+            <p class="text-sm text-slate-600">
+                <span class="font-medium">Last Updated:</span>
+                {{ chapter()?.updated_at | date }}
+            </p>
+        </header>
+        <section class="prose-sm md:prose-lg py-4">
+            <div [innerHTML]="chapter()?.content | safeHtml"></div>
+        </section>
+        <footer class="mt-8">
+            <div class="grid grid-cols-3 text-center gap-4">
+                <!-- Previous Chapter -->
+                <a mat-button [routerLink]="prevChapterLink"
+                    [attr.disabled]="!prevChapterLink ? true : null">Previous</a>
+                <a mat-button [routerLink]="tocLink">All Chapters</a>
+                <a mat-button [routerLink]="nextChapterLink" [attr.disabled]="!nextChapterLink ? true : null">Next</a>
+            </div>
+        </footer>
+    </article>
+</section>

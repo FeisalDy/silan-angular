@@ -1,0 +1,13 @@
+{
+    "watch": [
+        "dist/silan-angular/server"
+    ],
+    "ext": "mjs,js",
+    "ignore": [
+        "dist/silan-angular/browser/**"
+    ],
+    "exec": "node dist/silan-angular/server/server.mjs",
+    "delay": 500,
+    "verbose": true,
+    "restartable": "rs"
+}

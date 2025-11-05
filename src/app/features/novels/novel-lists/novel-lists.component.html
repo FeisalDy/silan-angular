@@ -1,8 +1,5 @@
-<div class="mx-auto max-w-6xl p-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        @for (novel of novels(); track novel.id) {
-        <app-novel-card [novel]="novel" />
-        }
-    </div>
-
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    @for (novel of novels(); track novel.id) {
+    <app-novel-card [novel]="novel" />
+    }
 </div>
