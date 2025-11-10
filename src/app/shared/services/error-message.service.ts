@@ -10,7 +10,6 @@ export interface ErrorMapping {
 @Injectable({ providedIn: 'root' })
 export class ErrorMessageService {
   private mappings: ErrorMapping[] = [
-    // Common auth messages
     {
       pattern: /invalid email|invalid password|invalid credentials/i,
       message: 'Invalid email or password.',

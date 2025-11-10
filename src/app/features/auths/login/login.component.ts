@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { AuthLayoutComponent } from '../auth-layout/auth-layout.component';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { ErrorMessageService } from '@/app/shared/services/error-message.service';

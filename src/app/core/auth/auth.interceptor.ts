@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.getToken();
+  const token = authService.token;
 
   // If the request already has an Authorization header, do nothing.
   // This allows services to override the token on a per-call basis.
