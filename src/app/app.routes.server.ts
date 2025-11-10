@@ -6,6 +6,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'login',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'novels/:id',
     renderMode: RenderMode.Server,
   },

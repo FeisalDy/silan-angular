@@ -1,18 +1,15 @@
-<mat-toolbar>
+<mat-toolbar class="sticky top-0 z-30 bg-surface-container px-4">
     <div class="flex items-center justify-between max-w-[1500px] mx-auto w-full">
         <!-- Logo / Home -->
-        <a matButton="tonal" routerLink="/" routerLinkActive="active-link">
-            <mat-icon aria-hidden="false" aria-label="Home icon">home</mat-icon>
-            Home
+        <a mat-button routerLink="/" routerLinkActive="active-link" class="flex items-center gap-1 font-medium">
+            <mat-icon aria-hidden="true">home</mat-icon>
+            <span class="hidden sm:inline">Home</span>
         </a>
 
-        <!-- <nav class="flex gap-4">
-            <a matButton="" routerLink="/novels" routerLinkActive="active-link">
-                Novels
+        <nav class="flex items-center gap-2 text-sm" aria-label="Primary navigation">
+            <a mat-button routerLink="/upload-epub" routerLinkActive="active-link" class="font-medium">
+                Upload EPUB
             </a>
-            <a matButton="" routerLink="/about" routerLinkActive="active-link">
-                About
-            </a>
-        </nav> -->
+        </nav>
     </div>
 </mat-toolbar>

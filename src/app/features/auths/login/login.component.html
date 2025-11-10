@@ -1,0 +1,68 @@
+<app-auth-layout>
+    <mat-card appearance="outlined" class="shadow-sm">
+        <mat-card-content class="space-y-6">
+            <header class="space-y-1">
+                <h2 class="text-xl font-semibold tracking-tight">Sign in to your account</h2>
+                <p class="text-sm text-slate-600">New here?
+                    <a routerLink="/register" class="text-primary hover:underline font-medium">Create an account</a>
+                </p>
+            </header>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Email address</mat-label>
+                    <input type="email" matInput autocomplete="email" formControlName="email"
+                        placeholder="you@example.com" />
+                    @if (emailControl()?.invalid && (emailControl()?.dirty || emailControl()?.touched)) {
+                    <mat-error>{{ getError('email') }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput autocomplete="current-password" formControlName="password"
+                        placeholder="••••••••" />
+                    @if (passwordControl()?.invalid && (passwordControl()?.dirty || passwordControl()?.touched)) {
+                    <mat-error>{{ getError('password') }}</mat-error>
+                    }
+                </mat-form-field>
+
+                @if(errorMessage() ){
+                <div class="bg-error-container p-4 rounded-sm">
+                    <p class="text-on-error-container">{{errorMessage()}}</p>
+                </div>
+                }
+
+
+                <div class="flex items-center justify-between">
+                    <button mat-button type="button" routerLink="/forgot-password">Forgot password?</button>
+                </div>
+
+                <button mat-flat-button color="primary" type="submit" class="w-full"
+                    [disabled]="loginForm.invalid || loginLoading()">
+                    <div class="flex items-center justify-center gap-3">
+                        @if (loginLoading()) {
+                        <mat-spinner [diameter]="20"></mat-spinner>
+                        }
+                        @if (!loginLoading()) {
+                        <span>Sign In</span>
+                        } @else {
+                        <span>Signing In...</span>
+                        }
+                    </div>
+                </button>
+
+                <div class="flex items-center gap-4 my-2" aria-hidden="true">
+                    <span class="grow h-px bg-slate-200"></span>
+                    <span class="text-xs text-slate-500">OR</span>
+                    <span class="grow h-px bg-slate-200"></span>
+                </div>
+
+                <button mat-stroked-button type="button" class="w-full flex items-center justify-center gap-2">
+                    <mat-icon fontIcon="fa-google" aria-hidden="true"></mat-icon>
+                    <span>Sign in with Google</span>
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</app-auth-layout>

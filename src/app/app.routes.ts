@@ -8,6 +8,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'login',
+    loadComponent: () =>
+      import('@/app/features/auths/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
+  },
+  {
     path: 'novels/:id',
     loadComponent: () =>
       import(
@@ -26,6 +33,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('@/app/features/novels/upload-epub/upload-epub.component').then(
         (m) => m.UploadEpubComponent
+      ),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('@/app/features/auths/login/login.component').then(
+        (m) => m.LoginComponent
       ),
   },
 ];

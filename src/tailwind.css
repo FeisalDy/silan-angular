@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+*, ::before, ::after {
+    border-style: none;
+}
 @theme {
   /* === Primary === */
   --color-primary: var(--mat-sys-primary);

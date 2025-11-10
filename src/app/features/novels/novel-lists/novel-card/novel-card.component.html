@@ -1,10 +1,10 @@
-<article class="flex items-start gap-4 border-b border-slate-200 pb-4">
+<article class="flex items-start gap-4 border-b border-outline-variant/40 pb-4">
     <figure class="shrink-0">
         <img class="aspect-2/3 h-40 md:h-60 rounded-md object-cover shadow-sm" [src]="novel().cover_url ?? ''"
             [alt]="novel().title | truncate:80" />
     </figure>
 
-    <div class="flex-1 min-w-0" [routerLink]="['/novels', novel().id]" class="cursor-pointer">
+    <div class="flex-1 min-w-0 cursor-pointer" [routerLink]="['/novels', novel().id]">
         <header class="mb-2">
             <h2 class="text-lg font-semibold text-slate-900 truncate">
                 {{ novel().title | truncate:80 }}
@@ -15,7 +15,7 @@
             </p>
         </header>
 
-        <section class="prose-sm md:prose-lg line-clamp-5">
+        <section class="prose prose-sm md:prose-base max-w-none line-clamp-5">
             <div [innerHTML]="novel().description | safeHtml"></div>
         </section>
 
