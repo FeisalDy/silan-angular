@@ -1,9 +1,18 @@
-<header class="bg-primary">
-    <div class="p-2 mx-auto max-w-[1500px]">
-        <nav class="">
-            <a routerLink="/" routerLinkActive="active-link" matButton="tonal">
-                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>Home
+<mat-toolbar>
+    <div class="flex items-center justify-between max-w-[1500px] mx-auto w-full">
+        <!-- Logo / Home -->
+        <a matButton="tonal" routerLink="/" routerLinkActive="active-link">
+            <mat-icon aria-hidden="false" aria-label="Home icon">home</mat-icon>
+            Home
+        </a>
+
+        <!-- <nav class="flex gap-4">
+            <a matButton="" routerLink="/novels" routerLinkActive="active-link">
+                Novels
             </a>
-        </nav>
+            <a matButton="" routerLink="/about" routerLinkActive="active-link">
+                About
+            </a>
+        </nav> -->
     </div>
-</header>
+</mat-toolbar>

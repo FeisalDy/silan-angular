@@ -1,0 +1,9 @@
+{
+    "chat.mcp.serverSampling": {
+        "silan-angular/.vscode/mcp.json: angular-cli": {
+            "allowedModels": [
+                "copilot/gpt-5-codex"
+            ]
+        }
+    }
+}

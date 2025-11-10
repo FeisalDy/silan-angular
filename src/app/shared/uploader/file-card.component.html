@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-content class="flex items-center justify-between p-4">
+        <div class="grow">
+            <div class="font-bold">{{ file.name }}</div>
+            <div class="text-sm text-gray-500">{{ file.size | fileSize }}</div>
+        </div>
+        <button mat-icon-button (click)="remove.emit()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-card-content>
+</mat-card>
