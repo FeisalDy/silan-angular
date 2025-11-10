@@ -13,7 +13,7 @@
                     <mat-label>Email address</mat-label>
                     <input type="email" matInput autocomplete="email" formControlName="email"
                         placeholder="you@example.com" />
-                    @if (emailControl()?.invalid && (emailControl()?.dirty || emailControl()?.touched)) {
+                    @if (emailCtrl?.invalid && (emailCtrl?.dirty || emailCtrl?.touched)) {
                     <mat-error>{{ getError('email') }}</mat-error>
                     }
                 </mat-form-field>
@@ -22,7 +22,7 @@
                     <mat-label>Password</mat-label>
                     <input type="password" matInput autocomplete="current-password" formControlName="password"
                         placeholder="••••••••" />
-                    @if (passwordControl()?.invalid && (passwordControl()?.dirty || passwordControl()?.touched)) {
+                    @if (passwordCtrl?.invalid && (passwordCtrl?.dirty || passwordCtrl?.touched)) {
                     <mat-error>{{ getError('password') }}</mat-error>
                     }
                 </mat-form-field>

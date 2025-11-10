@@ -43,9 +43,13 @@ export class LoginComponent {
     password: ['', [Validators.required]],
   });
 
-  emailControl = () => this.loginForm.get('email');
-  passwordControl = () => this.loginForm.get('password');
+  get emailCtrl() {
+    return this.loginForm.get('email');
+  }
 
+  get passwordCtrl() {
+    return this.loginForm.get('password');
+  }
   getError(controlName: 'email' | 'password'): string {
     const control = this.loginForm.get(controlName);
     return this.formErrorService.getErrorMessage(control, controlName);
@@ -53,10 +57,11 @@ export class LoginComponent {
 
   errorMessage = signal('');
   onSubmit() {
-    const emailCtrl = this.emailControl();
-    const passwordCtrl = this.passwordControl();
-
-    if (this.loginForm.invalid || !emailCtrl?.value || !passwordCtrl?.value) {
+    if (
+      this.loginForm.invalid ||
+      !this.emailCtrl?.value ||
+      !this.passwordCtrl?.value
+    ) {
       return;
     }
 
@@ -64,8 +69,8 @@ export class LoginComponent {
     this.loginLoading.set(true);
     this.authService
       .login({
-        email: emailCtrl.value,
-        password: passwordCtrl.value,
+        email: this.emailCtrl.value,
+        password: this.passwordCtrl.value,
       })
       .pipe(finalize(() => this.loginLoading.set(false)))
       .subscribe({
