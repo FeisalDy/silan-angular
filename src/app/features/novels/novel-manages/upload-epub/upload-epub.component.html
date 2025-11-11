@@ -1,12 +1,10 @@
 <section>
-    <h1 class="text-2xl font-bold mb-4">Upload EPUB Novel</h1>
-
     <app-uploader [files]="files" [accept]="acceptTypes" [maxFiles]="1" [maxFileSize]="maxUploadSize"
         (filesChanged)="onFilesChanged($event)" (rejectedFiles)="onFilesRejected($event)"></app-uploader>
 
     @if (selectedFile) {
     <div class="mt-4">
-        <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="isUploading">
+        <button mat-raised-button (click)="uploadFile()" [disabled]="isUploading">
             Upload {{ selectedFile.name }}
         </button>
     </div>

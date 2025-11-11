@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ChapterService } from '../../../chapter.service';
+import { ChapterService } from '@/app/features/novels/chapter.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { SafeHtmlPipe } from '@/app/shared/pipes/safe-html.pipe';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

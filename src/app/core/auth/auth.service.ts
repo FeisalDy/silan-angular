@@ -1,5 +1,11 @@
 import { ApiService } from '@/app/core/api/api.service';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import {
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal,
+  computed,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import {
   LoginRequest,
@@ -7,6 +13,7 @@ import {
   RegisterRequest,
   RegisterResponse,
   User,
+  Permissions,
 } from './auth.model';
 import { tap } from 'rxjs';
 
@@ -18,13 +25,13 @@ export class AuthService {
   private api = inject(ApiService);
   private platformId = inject(PLATFORM_ID);
 
-  private _token: string | null = null;
-  private _user: User | null = null;
+  private _tokenSignal = signal<string | null>(null);
+  private _userSignal = signal<User | null>(null);
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      this._token = localStorage.getItem('access_token');
-      this._user = this.loadUserFromStorage();
+      this._tokenSignal.set(localStorage.getItem('access_token'));
+      this._userSignal.set(this.loadUserFromStorage());
     }
   }
 
@@ -41,8 +48,9 @@ export class AuthService {
   }
 
   private saveSession(token: string, user: User): void {
-    this._token = token;
-    this._user = user;
+    this._tokenSignal.set(token);
+    this._userSignal.set(user);
+
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('access_token', token);
       localStorage.setItem('user', JSON.stringify(user));
@@ -50,25 +58,21 @@ export class AuthService {
   }
 
   private clearSession(): void {
-    this._token = null;
-    this._user = null;
+    this._tokenSignal.set(null);
+    this._userSignal.set(null);
+
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
     }
   }
 
-  get token(): string | null {
-    return this._token;
-  }
-
-  get user(): User | null {
-    return this._user;
-  }
-
-  get isLoggedIn(): boolean {
-    return !!this._token;
-  }
+  readonly token = this._tokenSignal.asReadonly();
+  readonly user = this._userSignal.asReadonly();
+  readonly isLoggedIn = computed(() => !!this.token());
+  readonly permission = computed(
+    () => this.user()?.permissions as Permissions | null | undefined
+  );
 
   login(body: LoginRequest) {
     return this.api.post<LoginResponse>(`${this.BASE_PATH}/login`, body).pipe(
@@ -94,6 +98,24 @@ export class AuthService {
 
   getProfile() {
     return this.api.get<User>(`${this.BASE_PATH}/profile`);
+  }
+
+  hasPermission(
+    resource: keyof Permissions,
+    action: Permissions[keyof Permissions] extends
+      | (infer ActionType)[]
+      | undefined
+      ? ActionType
+      : never
+  ): boolean {
+    const permissions = this.permission();
+    if (!permissions) {
+      return false;
+    }
+
+    const grantedActions = permissions[resource] as string[] | undefined;
+
+    return grantedActions ? grantedActions.includes(action) : false;
   }
 
   logout(): void {

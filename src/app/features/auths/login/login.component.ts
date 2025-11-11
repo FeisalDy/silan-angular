@@ -6,9 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
-import { AuthLayoutComponent } from '../auth-layout/auth-layout.component';
-import { AuthService } from '../../../core/auth/auth.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthLayoutComponent } from '@/app/features/auths/auth-layout/auth-layout.component';
+import { AuthService } from '@/app/core/auth/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { ErrorMessageService } from '@/app/shared/services/error-message.service';
@@ -31,6 +31,7 @@ import { ErrorMessageService } from '@/app/shared/services/error-message.service
 })
 export class LoginComponent {
   router = inject(Router);
+  route = inject(ActivatedRoute);
   formBuilder = inject(FormBuilder);
   formErrorService = inject(FormErrorService);
   authService = inject(AuthService);
@@ -55,6 +56,20 @@ export class LoginComponent {
     return this.formErrorService.getErrorMessage(control, controlName);
   }
 
+  onSuccessfulLogin() {
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    let path = '/';
+
+    if (returnUrl) {
+      const decodedUrl = decodeURIComponent(returnUrl);
+
+      if (!decodedUrl.startsWith('/login')) {
+        path = decodedUrl;
+      }
+    }
+    this.router.navigateByUrl(path);
+  }
+
   errorMessage = signal('');
   onSubmit() {
     if (
@@ -75,7 +90,7 @@ export class LoginComponent {
       .pipe(finalize(() => this.loginLoading.set(false)))
       .subscribe({
         next: () => {
-          this.router.navigate(['/upload-epub']);
+          this.onSuccessfulLogin();
         },
         error: (err) => {
           const backendMsg =

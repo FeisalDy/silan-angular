@@ -1,0 +1,18 @@
+<img mat-button [matMenuTriggerFor]="menu" class="inline-block size-10 rounded-full object-cover hover:cursor-pointer"
+    [src]="currentUser()?.avatar_url ?? 'assets/illustrations/shy-guy-avatar.svg'"
+    [alt]="`Avatar of ${currentUser()?.username}`" aria-label="Open user menu">
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+    </button>
+    <button mat-menu-item (click)="handleLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-menu>

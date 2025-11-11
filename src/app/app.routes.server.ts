@@ -18,6 +18,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'novels/manages',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'upload-epub',
     renderMode: RenderMode.Client,
   },

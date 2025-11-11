@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Novel } from '../../novel.model';
+import { Novel } from '@/app/features/novels/novel.model';
 import { TruncatePipe } from '@/app/shared/pipes/truncate.pipe';
 import { SafeHtmlPipe } from '@/app/shared/pipes/safe-html.pipe';
 import { MatChipsModule } from '@angular/material/chips';

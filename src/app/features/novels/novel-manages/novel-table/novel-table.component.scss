@@ -1,0 +1,81 @@
+.novel-table {
+  width: 100%;
+
+  th {
+    text-transform: capitalize;
+  }
+
+  ::ng-deep {
+    .mat-column-title {
+      width: 100%;
+    }
+
+    .mat-column-operation {
+      width: 1%;
+      white-space: nowrap;
+    }
+
+    .mat-column-expand {
+      width: 1%;
+      white-space: nowrap;
+    }
+  }
+}
+
+// Expanded detail row
+.expanded-detail-row {
+  height: 0;
+}
+
+// Novel row states
+.novel-row {
+  cursor: pointer;
+
+  td {
+    border-bottom-width: 0;
+  }
+
+  &:not(.novel-row--expanded) {
+    &:hover {
+      background: whitesmoke;
+    }
+
+    &:active {
+      background: #efefef;
+    }
+  }
+}
+
+.expanded-content-wrapper {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: 100%;
+  transition: grid-template-rows 225ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.expanded-content {
+  display: flex;
+  min-height: 0;
+
+  &__image {
+    flex-shrink: 0;
+  }
+
+  &__description {
+    padding: 16px;
+  }
+}
+
+// Expand toggle button
+.expand-toggle-button {
+  transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--rotated {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,18 @@
+<section class="flex flex-col gap-4">
+    <mat-tab-group>
+        <mat-tab label="Epub">
+            <ng-template matTabContent>
+                <div class="p-1 mt-4">
+                    <app-upload-epub (uploadSuccess)="onUploadSuccess()"></app-upload-epub>
+                </div>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="TXT">
+            <ng-template matTabContent>
+                Coming Soon...
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
+    <app-novel-table [reloadSignal]="reloadCounter()"></app-novel-table>
+</section>

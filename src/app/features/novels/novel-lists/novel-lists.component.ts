@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { NovelService } from '../novel.service';
+import { NovelService } from '@/app/features/novels/novel.service';
 import { CommonModule } from '@angular/common';
-import { NovelCardComponent } from './novel-card/novel-card.component';
+import { NovelCardComponent } from '@/app/features/novels/novel-lists/novel-card/novel-card.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 

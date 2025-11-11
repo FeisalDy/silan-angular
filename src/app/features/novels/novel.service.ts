@@ -7,8 +7,9 @@ import {
 import { filter, map } from 'rxjs';
 import { ApiService } from '@/app/core/api/api.service';
 import { ApiResponse } from '@/app/core/api/api-response.model';
-import { Novel } from './novel.model';
+import { Novel, NovelListRequest } from './novel.model';
 import { Volume } from './volume.model';
+import { ApiRequest } from '@/app/core/api/api-request.model';
 
 export type UploadEpubEvent =
   | { type: 'progress'; progress: number }
@@ -20,8 +21,8 @@ export type UploadEpubEvent =
 export class NovelService {
   private api = inject(ApiService);
 
-  getNovels() {
-    return this.api.get<Novel[]>('/novels');
+  getNovels(params?: ApiRequest<NovelListRequest>) {
+    return this.api.get<Novel[]>('/novels', params);
   }
 
   getNovelById(id: string) {
@@ -30,6 +31,10 @@ export class NovelService {
 
   getNovelVolume(novelId: string) {
     return this.api.get<Volume[]>(`/novels/${novelId}/volumes`);
+  }
+
+  deleteNovelById(id: string) {
+    return this.api.delete<void>(`/novels/${id}`);
   }
 
   uploadEpub(file: File) {

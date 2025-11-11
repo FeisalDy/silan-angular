@@ -22,7 +22,7 @@
         <footer class="mt-3">
             <mat-chip-set aria-label="Novel tags" class="flex flex-wrap gap-1">
                 @for (tag of tags(); track tag.slug) {
-                <mat-chip color="primary" [title]="tag.description" selected (click)="onTagClick($event, tag)">{{
+                <mat-chip [title]="tag.description" selected (click)="onTagClick($event, tag)">{{
                     tag.name }}</mat-chip>
                 }
             </mat-chip-set>

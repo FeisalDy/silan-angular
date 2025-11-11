@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/auth/auth.guard';
 export const routes: Routes = [
   {
     path: '',
@@ -13,6 +14,14 @@ export const routes: Routes = [
       import('@/app/features/auths/login/login.component').then(
         (m) => m.LoginComponent
       ),
+  },
+  {
+    path: 'novels/manages',
+    loadComponent: () =>
+      import(
+        '@/app/features/novels/novel-manages/novel-manages.component'
+      ).then((m) => m.NovelManagesComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'novels/:id',
@@ -31,9 +40,10 @@ export const routes: Routes = [
   {
     path: 'upload-epub',
     loadComponent: () =>
-      import('@/app/features/novels/upload-epub/upload-epub.component').then(
-        (m) => m.UploadEpubComponent
-      ),
+      import(
+        '@/app/features/novels/novel-manages/upload-epub/upload-epub.component'
+      ).then((m) => m.UploadEpubComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'login',

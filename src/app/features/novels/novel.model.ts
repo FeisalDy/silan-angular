@@ -26,3 +26,7 @@ interface Genre {
   slug: string;
   description: string | null;
 }
+
+export interface NovelListRequest {
+  title?: string | null | undefined;
+}

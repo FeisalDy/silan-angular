@@ -1,15 +1,24 @@
 <mat-toolbar class="sticky top-0 z-30 bg-surface-container px-4">
     <div class="flex items-center justify-between max-w-[1500px] mx-auto w-full">
-        <!-- Logo / Home -->
         <a mat-button routerLink="/" routerLinkActive="active-link" class="flex items-center gap-1 font-medium">
             <mat-icon aria-hidden="true">home</mat-icon>
             <span class="hidden sm:inline">Home</span>
         </a>
 
-        <nav class="flex items-center gap-2 text-sm" aria-label="Primary navigation">
-            <a mat-button routerLink="/upload-epub" routerLinkActive="active-link" class="font-medium">
-                Upload EPUB
+        <nav class="flex gap-2 text-sm" aria-label="Primary navigation">
+            @if (canUploadNovel) {
+            <a mat-button routerLink="/novels/manages" routerLinkActive="active-link" class="font-medium">
+                Manage Novels
             </a>
+            <app-profile-dropdown />
+            }
+            @else if (isLoggedIn) {
+            <app-profile-dropdown />
+            }
+            @else {
+            <button mat-button routerLink="/login" [queryParams]="{ returnUrl: getCurrentUrl() }">
+                Login
+            </button> }
         </nav>
     </div>
 </mat-toolbar>

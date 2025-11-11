@@ -1,11 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UploaderComponent } from '@/app/shared/uploader/uploader.component';
 import { FileRejection } from '@/app/shared/uploader/uploader-validation.service';
-import { NovelService, UploadEpubEvent } from '../novel.service';
+import {
+  NovelService,
+  UploadEpubEvent,
+} from '@/app/features/novels/novel.service';
 
 @Component({
   selector: 'app-upload-epub',
@@ -22,6 +25,8 @@ import { NovelService, UploadEpubEvent } from '../novel.service';
 export class UploadEpubComponent {
   novelService = inject(NovelService);
   snackBar = inject(MatSnackBar);
+
+  uploadSuccess = output<void>();
 
   selectedFile: File | null = null;
   files: File[] = [];
@@ -78,6 +83,7 @@ export class UploadEpubComponent {
           this.isUploading = false;
           this.files = [];
           this.selectedFile = null;
+          this.uploadSuccess.emit();
         }
       },
       error: () => {

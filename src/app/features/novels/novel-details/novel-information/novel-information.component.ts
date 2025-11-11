@@ -1,4 +1,4 @@
-import { Novel } from '../../novel.model';
+import { Novel } from '@/app/features/novels/novel.model';
 import { SafeHtmlPipe } from '@/app/shared/pipes/safe-html.pipe';
 import { MatChipsModule } from '@angular/material/chips';
 import { computed, input, Component, inject } from '@angular/core';

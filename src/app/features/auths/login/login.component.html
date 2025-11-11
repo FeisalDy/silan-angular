@@ -38,8 +38,7 @@
                     <button mat-button type="button" routerLink="/forgot-password">Forgot password?</button>
                 </div>
 
-                <button mat-flat-button color="primary" type="submit" class="w-full"
-                    [disabled]="loginForm.invalid || loginLoading()">
+                <button mat-flat-button type="submit" class="w-full" [disabled]="loginForm.invalid || loginLoading()">
                     <div class="flex items-center justify-center gap-3">
                         @if (loginLoading()) {
                         <mat-spinner [diameter]="20"></mat-spinner>
@@ -51,6 +50,7 @@
                         }
                     </div>
                 </button>
+
 
                 <div class="flex items-center gap-4 my-2" aria-hidden="true">
                     <span class="grow h-px bg-slate-200"></span>
