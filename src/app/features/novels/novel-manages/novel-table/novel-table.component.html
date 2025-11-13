@@ -5,10 +5,17 @@
         <th mat-header-cell *matHeaderCellDef>{{column}}</th>
         <td mat-cell *matCellDef="let novel">
             @if (column === 'operation') {
-            <button mat-icon-button [disabled]="loadingDeletingNovel()"
-                (click)="deleteNovel(novel); $event.stopPropagation()" aria-label="Delete novel">
-                <mat-icon class="text-error!">delete</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="novelActions" aria-label="Novel actions menu"
+                (click)="$event.stopPropagation()"> <mat-icon>more_vert</mat-icon>
             </button>
+
+            <mat-menu #novelActions="matMenu">
+                <button mat-menu-item [disabled]="loadingDeletingNovel()"
+                    (click)="deleteNovel(novel); $event.stopPropagation()">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </mat-menu>
             } @else {
             {{novel[column]}}
             }

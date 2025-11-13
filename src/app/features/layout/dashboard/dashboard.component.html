@@ -1,4 +1,46 @@
-<mat-drawer-container class="example-container">
-    <mat-drawer mode="side" opened>Drawer content</mat-drawer>
-    <mat-drawer-content><router-outlet /></mat-drawer-content>
+<mat-drawer-container class="h-screen w-full bg-slate-50" [hasBackdrop]="isHandset()">
+    <mat-drawer #drawer [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset()"
+        class="w-80 border-r border-slate-200 bg-white md:w-88">
+        <div class="flex h-full">
+            <nav class="flex w-18 flex-col items-center gap-3 border-r border-slate-200 py-6">
+                <button *ngFor="let menu of menus" mat-mini-fab type="button"
+                    [color]="menu.id === activeMenu.id ? 'primary' : undefined"
+                    (click)="selectMenu(menu.id); isHandset() ? drawer.close() : null" [matTooltip]="menu.label"
+                    class="shadow-sm transition-colors duration-150">
+                    <mat-icon>{{ menu.icon }}</mat-icon>
+                </button>
+            </nav>
+
+            <div class="flex-1 overflow-y-auto p-6">
+                <header class="border-b border-slate-200 pb-4">
+                    <h2 class="text-lg font-semibold text-slate-800">{{ activeMenu.label }}</h2>
+                    <p class="mt-1 text-sm text-slate-500">{{ activeMenu.description }}</p>
+                </header>
+
+                <mat-nav-list class="mt-6">
+                    <a mat-list-item *ngFor="let item of activeMenu.items" [routerLink]="item.route"
+                        class="rounded-md px-3 py-2 hover:bg-slate-100" (click)="isHandset() ? drawer.close() : null">
+                        <div matLine class="text-sm font-medium text-slate-800">{{ item.label }}</div>
+                        <div matLine class="text-xs text-slate-500">{{ item.description }}</div>
+                    </a>
+                </mat-nav-list>
+            </div>
+        </div>
+    </mat-drawer>
+
+    <mat-drawer-content class="h-full">
+        <div class="flex h-full flex-col">
+            @if(isHandset()){
+            <div class="flex items-center gap-3 border-b border-slate-200 px-4 py-3">
+                <button mat-icon-button type="button" (click)="drawer.toggle()" aria-label="Toggle navigation">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="text-base font-semibold text-slate-800">{{ activeMenu.label }}</span>
+            </div>
+            }
+            <div class="h-full flex-1 overflow-auto p-4">
+                <router-outlet />
+            </div>
+        </div>
+    </mat-drawer-content>
 </mat-drawer-container>

@@ -42,7 +42,13 @@ export const routes: Routes = [
           import(
             '@/app/features/novels/novel-manages/novel-manages.component'
           ).then((m) => m.NovelManagesComponent),
-        canActivate: [authGuard],
+      },
+      {
+        path: 'novels/create',
+        loadComponent: () =>
+          import(
+            '@/app/features/novels/novel-manages/upload-epub/upload-epub.component'
+          ).then((m) => m.UploadEpubComponent),
       },
     ],
   },

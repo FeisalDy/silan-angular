@@ -10,15 +10,19 @@ import {
 } from '@/app/features/novels/novel.service';
 import { SnackbarHandlerService } from '@/app/shared/services/snackbar-handler.service';
 import { finalize } from 'rxjs';
-
+import { RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-upload-epub',
   standalone: true,
   imports: [
+    RouterLink,
     CommonModule,
     UploaderComponent,
     MatButtonModule,
     MatProgressBarModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './upload-epub.component.html',
 })

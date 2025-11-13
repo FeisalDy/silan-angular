@@ -1,19 +1,20 @@
-<section>
-    <app-uploader [files]="files" [accept]="acceptTypes" [maxFiles]="1" [maxFileSize]="maxUploadSize"
-        (filesChanged)="onFilesChanged($event)" (rejectedFiles)="onFilesRejected($event)"></app-uploader>
+<section class="space-y-4">
+    <button matIconButton aria-label="Back to Novels" [routerLink]="['..']">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
 
-    @if (selectedFile) {
-    <div class="mt-4">
-        <button mat-raised-button (click)="uploadFile()" [disabled]="isUploading">
-            Upload {{ selectedFile.name }}
-        </button>
+    <div>
+        <app-uploader [files]="files" [accept]="acceptTypes" [maxFiles]="1" [maxFileSize]="maxUploadSize"
+            (filesChanged)="onFilesChanged($event)" (rejectedFiles)="onFilesRejected($event)"></app-uploader>
     </div>
+    @if (selectedFile) {
+    <button mat-raised-button (click)="uploadFile()" [disabled]="isUploading()">
+        Upload {{ selectedFile.name }}
+    </button>
     }
 
     @if (isUploading()) {
-    <div class="mt-4">
-        <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
-        <div class="text-center mt-2">{{ uploadProgress }}%</div>
-    </div>
+    <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+    <div class="text-center mt-2">{{ uploadProgress }}%</div>
     }
 </section>

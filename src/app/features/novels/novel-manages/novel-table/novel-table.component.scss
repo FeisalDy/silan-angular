@@ -64,10 +64,11 @@
 
   &__image {
     flex-shrink: 0;
+    padding-bottom: 16px;
   }
 
   &__description {
-    padding: 16px;
+    padding: 0px 16px;
   }
 }
 

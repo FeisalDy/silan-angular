@@ -25,10 +25,16 @@ import { TruncatePipe } from '@/app/shared/pipes/truncate.pipe';
 import { ConfirmationDialogComponent } from '@/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarHandlerService } from '@/app/shared/services/snackbar-handler.service';
-
+import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-novel-table',
-  imports: [MatTableModule, MatButtonModule, MatIconModule, TruncatePipe],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    TruncatePipe,
+    MatMenuModule,
+  ],
   templateUrl: './novel-table.component.html',
   styleUrl: './novel-table.component.scss',
 })

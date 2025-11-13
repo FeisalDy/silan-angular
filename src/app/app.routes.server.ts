@@ -25,4 +25,8 @@ export const serverRoutes: ServerRoute[] = [
     path: 'dashboard/novels',
     renderMode: RenderMode.Client,
   },
+  {
+    path: 'dashboard/novels/create',
+    renderMode: RenderMode.Client,
+  },
 ];

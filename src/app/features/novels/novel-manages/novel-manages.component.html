@@ -1,5 +1,5 @@
 <section class="flex flex-col gap-4">
-    <mat-tab-group>
+    <!-- <mat-tab-group>
         <mat-tab label="Epub">
             <ng-template matTabContent>
                 <div class="p-1 mt-4">
@@ -12,7 +12,21 @@
                 Coming Soon...
             </ng-template>
         </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
+
+    <div class="flex items-baseline gap-4 justify-between">
+        <!-- <mat-form-field class="w-[400px]">
+            <mat-label>Clearable input</mat-label>
+            <input matInput type="text" [(ngModel)]="searchValue" />
+            @if (searchValue()) {
+            <button matSuffix matIconButton aria-label="Clear" (click)="searchValue.set('')">
+                <mat-icon>close</mat-icon>
+            </button>
+            }
+        </mat-form-field> -->
+        <div class="text-transparent">.</div>
+        <button mat-flat-button color="primary" [routerLink]="['create']">Upload New Novel</button>
+    </div>
 
     <app-novel-table [reloadSignal]="reloadCounter()"></app-novel-table>
 </section>
