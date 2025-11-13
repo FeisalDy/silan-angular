@@ -6,13 +6,7 @@
         </a>
 
         <nav class="flex gap-2 text-sm" aria-label="Primary navigation">
-            @if (canUploadNovel) {
-            <a mat-button routerLink="/novels/manages" routerLinkActive="active-link" class="font-medium">
-                Manage Novels
-            </a>
-            <app-profile-dropdown />
-            }
-            @else if (isLoggedIn) {
+            @if (isLoggedIn) {
             <app-profile-dropdown />
             }
             @else {

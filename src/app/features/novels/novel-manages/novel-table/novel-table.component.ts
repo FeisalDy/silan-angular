@@ -24,7 +24,7 @@ import { ApiResponse } from '@/app/core/api/api-response.model';
 import { TruncatePipe } from '@/app/shared/pipes/truncate.pipe';
 import { ConfirmationDialogComponent } from '@/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarHandlerService } from '@/app/shared/services/snackbar-handler.service';
 
 @Component({
   selector: 'app-novel-table',
@@ -42,6 +42,7 @@ export class NovelTableComponent {
 
   novelService = inject(NovelService);
   errorMessageService = inject(ErrorMessageService);
+  notification = inject(SnackbarHandlerService);
   reloadSignal = input.required<number>();
 
   loadingFetchingNovel = signal(true);
@@ -122,7 +123,6 @@ export class NovelTableComponent {
     });
   }
 
-  snackBar = inject(MatSnackBar);
   loadingDeletingNovel = signal(false);
   private performDelete(novel: Novel) {
     this.loadingDeletingNovel.set(true);
@@ -136,13 +136,17 @@ export class NovelTableComponent {
       )
       .subscribe({
         next: () => {
-          this.snackBar.open('Novel deleted successfully!', 'Close', {
-            duration: 3000,
-          });
+          this.notification.success('Novel deleted successfully!');
         },
         error: (err) => {
+          // Let the global error handler handle 401, 403, 404, and 500+ errors
+          if (this.notification.shouldHandleGlobally(err)) {
+            return;
+          }
+
+          // Handle local/business logic errors
           const errorMessage = this.errorMessageService.getMessage(err);
-          this.snackBar.open(errorMessage);
+          this.notification.error(err, errorMessage);
         },
       });
   }

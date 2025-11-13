@@ -1,6 +1,5 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UploaderComponent } from '@/app/shared/uploader/uploader.component';
@@ -9,6 +8,8 @@ import {
   NovelService,
   UploadEpubEvent,
 } from '@/app/features/novels/novel.service';
+import { SnackbarHandlerService } from '@/app/shared/services/snackbar-handler.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-upload-epub',
@@ -17,21 +18,20 @@ import {
     CommonModule,
     UploaderComponent,
     MatButtonModule,
-    MatSnackBarModule,
     MatProgressBarModule,
   ],
   templateUrl: './upload-epub.component.html',
 })
 export class UploadEpubComponent {
   novelService = inject(NovelService);
-  snackBar = inject(MatSnackBar);
+  notification = inject(SnackbarHandlerService);
 
   uploadSuccess = output<void>();
 
   selectedFile: File | null = null;
   files: File[] = [];
   uploadProgress = 0;
-  isUploading = false;
+  isUploading = signal(false);
 
   readonly acceptTypes = ['.epub', 'application/epub+zip'];
   readonly maxUploadSize = 25 * 1024 * 1024; // 25 MB
@@ -59,7 +59,7 @@ export class UploadEpubComponent {
       message = 'Only one file can be uploaded at a time.';
     }
 
-    this.snackBar.open(message, 'Close', { duration: 3000 });
+    this.notification.warning(message);
   }
 
   uploadFile(): void {
@@ -67,32 +67,32 @@ export class UploadEpubComponent {
       return;
     }
 
-    this.isUploading = true;
+    this.isUploading.set(true);
     this.uploadProgress = 0;
-    this.novelService.uploadEpub(this.selectedFile).subscribe({
-      next: (event: UploadEpubEvent) => {
-        if (event.type === 'progress') {
-          this.uploadProgress = event.progress;
-        }
+    this.novelService
+      .uploadEpub(this.selectedFile)
+      .pipe(finalize(() => this.isUploading.set(false)))
+      .subscribe({
+        next: (event: UploadEpubEvent) => {
+          if (event.type === 'progress') {
+            this.uploadProgress = event.progress;
+          }
 
-        if (event.type === 'success') {
-          this.uploadProgress = 100;
-          this.snackBar.open('File uploaded successfully!', 'Close', {
-            duration: 3000,
-          });
-          this.isUploading = false;
-          this.files = [];
-          this.selectedFile = null;
-          this.uploadSuccess.emit();
-        }
-      },
-      error: () => {
-        this.snackBar.open('Upload failed. Please try again.', 'Close', {
-          duration: 3000,
-        });
-        this.isUploading = false;
-      },
-    });
+          if (event.type === 'success') {
+            this.uploadProgress = 100;
+            this.notification.success('File uploaded successfully!');
+            this.files = [];
+            this.selectedFile = null;
+            this.uploadSuccess.emit();
+          }
+        },
+        error: (err) => {
+          if (this.notification.shouldHandleGlobally(err)) {
+            return;
+          }
+          this.notification.error(err, 'Upload failed. Please try again.');
+        },
+      });
   }
 
   private formatBytes(bytes: number): string {

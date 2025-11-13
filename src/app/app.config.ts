@@ -12,12 +12,16 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { apiQueryParamsInterceptor } from '@/app/core/api/api-query-params.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor, apiQueryParamsInterceptor])
+    ),
   ],
 };

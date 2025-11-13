@@ -6,10 +6,6 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'login',
-    renderMode: RenderMode.Client,
-  },
-  {
     path: 'novels/:id',
     renderMode: RenderMode.Server,
   },
@@ -18,11 +14,15 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'novels/manages',
+    path: 'login',
     renderMode: RenderMode.Client,
   },
   {
-    path: 'upload-epub',
+    path: 'dashboard',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'dashboard/novels',
     renderMode: RenderMode.Client,
   },
 ];

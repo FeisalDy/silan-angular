@@ -10,7 +10,7 @@
     </div>
     }
 
-    @if (isUploading) {
+    @if (isUploading()) {
     <div class="mt-4">
         <mat-progress-bar mode="determinate" [value]="uploadProgress"></mat-progress-bar>
         <div class="text-center mt-2">{{ uploadProgress }}%</div>

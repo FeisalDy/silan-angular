@@ -1,15 +1,22 @@
 import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@/environments/environment';
 import { ApiResponse } from './api-response.model';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private baseUrl = environment.baseUrl;
+  private platformId = inject(PLATFORM_ID);
+
+  private get baseUrl(): string {
+    return isPlatformServer(this.platformId)
+      ? environment.dockerUrl || environment.baseUrl
+      : environment.baseUrl;
+  }
 
   private buildHttpParams(obj?: Record<string, any>): HttpParams {
     let params = new HttpParams();
@@ -19,7 +26,6 @@ export class ApiService {
       if (value === null || value === undefined) return;
 
       if (Array.isArray(value)) {
-        // ✅ Support multiple params with same key
         value.forEach((v) => {
           params = params.append(key, String(v));
         });
